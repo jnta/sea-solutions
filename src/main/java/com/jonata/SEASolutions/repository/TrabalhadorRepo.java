@@ -14,6 +14,6 @@ public interface TrabalhadorRepo extends JpaRepository<Trabalhador, Long> {
 
     Optional<Trabalhador> findByCpf(String cpf);
 
-    @Query("SELECT t FROM Trabalhador T where t.nome like :keyword")
+    @Query("SELECT t FROM Trabalhador t where t.nome like :keyword")
     List<Trabalhador> findByNome(@Param("keyword") String nome);
 }

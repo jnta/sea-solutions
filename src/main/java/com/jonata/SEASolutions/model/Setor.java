@@ -1,20 +1,21 @@
 package com.jonata.SEASolutions.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name= "TB_SETOR")
-public class Setor {
+public class Setor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(nullable = false, unique = true)
     private String nome;
-    @Column(name = "cargos")
-    @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "setor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Cargo> cargos = new ArrayList<>();
 
 

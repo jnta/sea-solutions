@@ -1,7 +1,9 @@
-package com.jonata.SEASolutions.dto;
+package com.jonata.SEASolutions.payload.dto;
 
 import com.jonata.SEASolutions.model.Trabalhador;
 import org.hibernate.validator.constraints.br.CPF;
+
+import java.math.BigDecimal;
 
 public class TrabalhadorDto {
 
@@ -10,12 +12,21 @@ public class TrabalhadorDto {
     @CPF(message = "Formato inválido!")
     private String cpf;
 
+    private String cargo;
+
+    private String setor;
+
+    private BigDecimal salario;
+
     public TrabalhadorDto(){}
 
     public TrabalhadorDto(Trabalhador trabalhador) {
         this.id = trabalhador.getId();
         this.nome = trabalhador.getNome();
         this.cpf = trabalhador.getCpf();
+        this.cargo = trabalhador.getCargo().getNome();
+        this.setor = trabalhador.getCargo().getSetor().getNome();
+        this.salario = trabalhador.getCargo().getSalario();
     }
 
     public Long getId() {
@@ -40,5 +51,29 @@ public class TrabalhadorDto {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+
+    public BigDecimal getSalario() {
+        return salario;
+    }
+
+    public void setSalario(BigDecimal salario) {
+        this.salario = salario;
     }
 }

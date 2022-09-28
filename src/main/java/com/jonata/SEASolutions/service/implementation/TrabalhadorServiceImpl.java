@@ -1,32 +1,48 @@
 package com.jonata.SEASolutions.service.implementation;
 
-import com.jonata.SEASolutions.dto.TrabalhadorDto;
 import com.jonata.SEASolutions.exception.ResourceNotFoundException;
+import com.jonata.SEASolutions.model.Cargo;
 import com.jonata.SEASolutions.model.Trabalhador;
+import com.jonata.SEASolutions.payload.dto.TrabalhadorDto;
+import com.jonata.SEASolutions.payload.form.TrabalhadorForm;
+import com.jonata.SEASolutions.repository.CargoRepo;
 import com.jonata.SEASolutions.repository.TrabalhadorRepo;
 import com.jonata.SEASolutions.service.TrabalhadorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TrabalhadorServiceImpl implements TrabalhadorService {
     private final TrabalhadorRepo trabalhadorRepo;
+    private final CargoRepo cargoRepo;
 
-    public TrabalhadorServiceImpl(TrabalhadorRepo trabalhadorRepo) {
+    public TrabalhadorServiceImpl(TrabalhadorRepo trabalhadorRepo, CargoRepo cargoRepo) {
         this.trabalhadorRepo = trabalhadorRepo;
+        this.cargoRepo = cargoRepo;
     }
 
     @Override
-    public TrabalhadorDto cadastrar(Trabalhador trabalhador) {
+    public TrabalhadorDto cadastrar(TrabalhadorForm trabalhadorForm) {
+        Cargo cargo = buscarCargo(trabalhadorForm.getCargoId());
+
+        Trabalhador trabalhador = new Trabalhador();
+        trabalhador.setNome(trabalhadorForm.getNome());
+        trabalhador.setCpf(trabalhadorForm.getCpf());
+        trabalhador.setCargo(cargo);
+
         Trabalhador trabalhadorSalvo = trabalhadorRepo.save(trabalhador);
         return new TrabalhadorDto(trabalhadorSalvo);
     }
 
     @Override
-    public List<TrabalhadorDto> listar() {
-        return trabalhadorRepo.findAll().stream().map(TrabalhadorDto::new).collect(Collectors.toList());
+    public Page<TrabalhadorDto> listar(Pageable pageable) {
+        return trabalhadorRepo.findAll(pageable).map(TrabalhadorDto::new);
     }
 
     @Override
@@ -48,13 +64,23 @@ public class TrabalhadorServiceImpl implements TrabalhadorService {
     }
 
     @Override
-    public TrabalhadorDto atualizar(TrabalhadorDto trabalhadorDto) {
-        return null;
+    public TrabalhadorDto atualizar(Long id, TrabalhadorForm trabalhadorForm) {
+        Trabalhador trabalhador = this.buscarPorId(id);
+        Cargo cargo = this.buscarCargo(trabalhadorForm.getCargoId());
+
+        trabalhador.setNome(trabalhadorForm.getNome());
+        trabalhador.setCpf(trabalhadorForm.getCpf());
+        trabalhador.setCargo(cargo);
+        Trabalhador trabalhadorAtualizado = trabalhadorRepo.save(trabalhador);
+
+        return new TrabalhadorDto(trabalhadorAtualizado);
     }
 
     @Override
     public Boolean remover(Long id) {
-        return null;
+        Trabalhador trabalhador = buscarPorId(id);
+        trabalhadorRepo.delete(trabalhador);
+        return Boolean.TRUE;
     }
 
     private Trabalhador buscarPorId(Long id) {
@@ -67,5 +93,9 @@ public class TrabalhadorServiceImpl implements TrabalhadorService {
 
     private Trabalhador buscarPorCpf(String cpf) {
         return trabalhadorRepo.findByCpf(cpf).orElseThrow(() -> new ResourceNotFoundException("Trabalhador não encontrado!"));
+    }
+
+    private Cargo buscarCargo(Long id) {
+        return cargoRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Cargo: " + id + " não encontrado!"));
     }
 }

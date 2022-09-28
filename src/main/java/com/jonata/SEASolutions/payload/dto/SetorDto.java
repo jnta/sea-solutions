@@ -1,5 +1,6 @@
-package com.jonata.SEASolutions.dto;
+package com.jonata.SEASolutions.payload.dto;
 
+import com.jonata.SEASolutions.model.Cargo;
 import com.jonata.SEASolutions.model.Setor;
 
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ public class SetorDto {
     public SetorDto(Setor setor) {
         this.id = setor.getId();
         this.nome = setor.getNome();
-        this.cargos = setor.getCargos().stream().map(CargoDto::new).collect(Collectors.toList());
+        if (!setor.getCargos().isEmpty() || setor.getCargos() != null) {
+            this.cargos = setor.getCargos().stream().map(CargoDto::new).collect(Collectors.toList());
+        }
     }
 
     public Long getId() {

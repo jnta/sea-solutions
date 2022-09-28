@@ -1,25 +1,24 @@
 package com.jonata.SEASolutions.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "TB_CARGO")
-public class Cargo {
+public class Cargo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "nome", nullable = false)
+    @Column(name = "nome", nullable = false, unique = true)
     private String nome;
     @Column(name = "salario", nullable = false)
     private BigDecimal salario;
-
-    @JoinColumn(name = "setor", unique = true, referencedColumnName = "nome")
     @ManyToOne
     private Setor setor;
 
-    @OneToMany(mappedBy = "cargo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cargo", fetch = FetchType.EAGER)
     private List<Trabalhador> trabalhadores;
 
     public Cargo() {}

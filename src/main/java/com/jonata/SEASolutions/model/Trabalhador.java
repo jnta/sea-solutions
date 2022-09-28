@@ -1,10 +1,11 @@
 package com.jonata.SEASolutions.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "TB_TRABALHADOR")
-public class Trabalhador {
+public class Trabalhador implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,11 +16,6 @@ public class Trabalhador {
     private String cpf;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "setor", referencedColumnName = "setor"),
-            @JoinColumn(name = "cargo", referencedColumnName = "nome"),
-            @JoinColumn(name = "salario", referencedColumnName = "salario")
-    })
     private Cargo cargo;
 
     public Trabalhador() {}

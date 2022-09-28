@@ -1,15 +1,16 @@
 package com.jonata.SEASolutions.service;
 
-import com.jonata.SEASolutions.dto.SetorDto;
+import com.jonata.SEASolutions.payload.dto.SetorDto;
 import com.jonata.SEASolutions.model.Setor;
+import com.jonata.SEASolutions.payload.form.SetorForm;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SetorService {
-    SetorDto cadastrar(Setor setor);
+    SetorDto cadastrar(SetorForm setorForm);
     List<SetorDto> listar();
     SetorDto detalharPorId(Long id);
-    SetorDto detalharPorNome(String nome);
+
+    SetorDto atualizar(Long id, SetorForm setorForm);
     Boolean remover(Long id);
 }

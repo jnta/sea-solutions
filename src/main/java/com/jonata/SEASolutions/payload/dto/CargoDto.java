@@ -1,18 +1,14 @@
-package com.jonata.SEASolutions.dto;
+package com.jonata.SEASolutions.payload.dto;
 
 import com.jonata.SEASolutions.model.Cargo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class CargoDto {
     private Long id;
     private String nome;
     private BigDecimal salario;
     private String setor;
-    private List<TrabalhadorDto> trabalhadores = new ArrayList<>();
 
     public CargoDto() {}
 
@@ -21,7 +17,6 @@ public class CargoDto {
         this.nome = cargo.getNome();
         this.salario = cargo.getSalario();
         this.setor = cargo.getSetor().getNome();
-        this.trabalhadores = cargo.getTrabalhadores().stream().map(TrabalhadorDto::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -56,11 +51,4 @@ public class CargoDto {
         this.setor = setor;
     }
 
-    public List<TrabalhadorDto> getTrabalhadores() {
-        return trabalhadores;
-    }
-
-    public void setTrabalhadores(List<TrabalhadorDto> trabalhadores) {
-        this.trabalhadores = trabalhadores;
-    }
 }
