@@ -1,4 +1,9 @@
 spring:
+  # MVC
+  spring:
+    mvc:
+      pathmatch:
+        matching-strategy: ant-path-matcher
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -7,7 +12,6 @@ spring:
     password: postgres
   # JPA properties
   jpa:
-
     hibernate:
       ddl-auto: update
     show-sql: true

@@ -48,7 +48,7 @@ public class CargoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deletar(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<ApiResponse> remover(@PathVariable(value = "id") Long id) {
         Boolean removido = cargoService.remover(id);
         return ResponseEntity.ok(new ApiResponse("Cargo removido!", removido));
     }

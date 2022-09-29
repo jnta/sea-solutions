@@ -101,7 +101,7 @@ class CargoControllerTest {
     @Test
     @DisplayName("Deveria retornar True ao deletar cargo por Id")
     public void deveriaRetornarTrue_quandoDeletarCargoPorId() {
-        Boolean success = cargoController.deletar(1l).getBody().getSuccess();
+        Boolean success = cargoController.remover(1l).getBody().getSuccess();
         Assertions.assertThat(success).isEqualTo(TRUE);
     }
 }
