@@ -3,6 +3,7 @@ package com.jonata.SEASolutions.controller;
 import com.jonata.SEASolutions.payload.dto.CargoDto;
 import com.jonata.SEASolutions.payload.form.CargoForm;
 import com.jonata.SEASolutions.service.CargoService;
+import com.jonata.SEASolutions.service.implementation.CargoServiceImpl;
 import com.jonata.SEASolutions.util.ApiResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +17,9 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/cargos")
 public class CargoController {
-    private final CargoService cargoService;
+    private final CargoServiceImpl cargoService;
 
-    public CargoController(CargoService cargoService) {
+    public CargoController(CargoServiceImpl cargoService) {
         this.cargoService = cargoService;
     }
 

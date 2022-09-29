@@ -3,6 +3,7 @@ package com.jonata.SEASolutions.controller;
 import com.jonata.SEASolutions.payload.dto.SetorDto;
 import com.jonata.SEASolutions.payload.form.SetorForm;
 import com.jonata.SEASolutions.service.SetorService;
+import com.jonata.SEASolutions.service.implementation.SetorServiceImpl;
 import com.jonata.SEASolutions.util.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/setores")
 public class SetorController {
-    private final SetorService setorService;
+    private final SetorServiceImpl setorService;
 
-    public SetorController(SetorService setorService) {
+    public SetorController(SetorServiceImpl setorService) {
         this.setorService = setorService;
     }
+
+
 
     @PostMapping
     public ResponseEntity<SetorDto> cadastrar(@RequestBody @Valid SetorForm setorForm) {

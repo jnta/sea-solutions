@@ -19,6 +19,14 @@ public class Setor implements Serializable {
     private List<Cargo> cargos = new ArrayList<>();
 
 
+    public Setor() {}
+
+    public Setor(Long id, String nome, List<Cargo> cargos) {
+        this.id = id;
+        this.nome = nome;
+        this.cargos = cargos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
